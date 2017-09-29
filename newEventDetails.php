@@ -37,18 +37,17 @@ background-color:#2C483F;
 }
   </style>
  <?php
-$con=mysqli_connect("localhost","root","Sporting2013Champs!","Home");
+$con=mysqli_connect("cyrindev.com","cyrin45d_handley","R}F}F622TrIP","cyrin45d_demo");
 // Check connection
 if (mysqli_connect_errno())
   {
   echo "Failed to connect to MySQL: " . mysqli_connect_error();
   }
-  $id = $_GET[id];
-  $month = $_POST[month];
-  $year = $_POST[year];
-				//Recurring bills
-				$sqlRecurringTotal = "SELECT * FROM `Bills` WHERE (`paidDate` = '0000-00-00' && `recurring` = 'yes') Order By `recurringDate` ASC";
-				$queryRecurringTotal=mysqli_query($con,$sqlRecurringTotal);
+  
+    $id = $_GET['id'];
+    $sql = "SELECT * FROM `Events` WHERE `id` = '$id'";
+    $query=mysqli_query($con,$sql);
+    $row=mysqli_fetch_array($query);
 ?>
 </head>
 <body>
@@ -56,7 +55,7 @@ if (mysqli_connect_errno())
 <tr>
 <td>
 <h3>
-New Outage Details
+<?php echo $row[name]; ?> Details 
 </h>
 </td>
 </tr>
@@ -78,41 +77,41 @@ Please select any that apply
 </tr>
 <tr>
 <td class="checkbox">
-<label><input id = "Optiv - Operations - IT" type=checkbox name="all" onclick="handleClick(this);">Optiv - Operations - IT</label>
+<label><input id = "Optiv - Operations - IT" type=checkbox value="all" name="dl[]" onclick="handleClick(this);">Optiv - Operations - IT</label>
 </td>
 <td class="checkbox">
-<label><input id = "Optiv - Operations - Enterprise Applications" type=checkbox name="ea" onclick="handleClick(this);">Optiv - Operations - Enterprise Applications</label>
+<label><input id = "Optiv - Operations - Enterprise Applications" type=checkbox value="ea" name="dl[]" onclick="handleClick(this);">Optiv - Operations - Enterprise Applications</label>
 </td>
 <td class="checkbox">
-<label><input id="Optiv - Operations - Enterprise Applications - SalesForce" type=checkbox name="sfdc"onclick='handleClick(this);'>Optiv - Operations - Enterprise Applications - SalesForce</label>
+<label><input id="Optiv - Operations - Enterprise Applications - SalesForce" type=checkbox value="sfdc" name="dl[]" onclick='handleClick(this);'>Optiv - Operations - Enterprise Applications - SalesForce</label>
 </td>
 </tr>
 <tr>
 <td class="checkbox">
-<label><input id="Optiv - Operations - Internal Infrastructure" type=checkbox name="infrastructure"onclick='handleClick(this);'>Optiv - Operations - Internal Infrastructure</label>
+<label><input id="Optiv - Operations - Internal Infrastructure" type=checkbox value="infrastructure" name="dl[]" onclick='handleClick(this);'>Optiv - Operations - Internal Infrastructure</label>
 </td>
 <td class="checkbox">
-<label><input id="Optiv - Operations - Internal Infrastructure - Core" type=checkbox name="core"onclick='handleClick(this);'>Optiv - Operations - Internal Infrastructure - Core</label>
+<label><input id="Optiv - Operations - Internal Infrastructure - Core" type=checkbox value="core" name="dl[]" onclick='handleClick(this);'>Optiv - Operations - Internal Infrastructure - Core</label>
 </td>
 <td class="checkbox">
-<label><input id="Optiv - Operations - Internal Infrastructure - Endpoint" type=checkbox name="endpoint"onclick='handleClick(this);'>Optiv - Operations - Internal Infrastructure - Endpoint</label>
+<label><input id="Optiv - Operations - Internal Infrastructure - Endpoint" type=checkbox value="endpoint" name="dl[]" onclick='handleClick(this);'>Optiv - Operations - Internal Infrastructure - Endpoint</label>
 </td>
 <tr>
 <td class="checkbox">
-<label><input id="Optiv - Operations - Internal Infrastructure - Network" type=checkbox name="network"onclick='handleClick(this);'>Optiv - Operations - Internal Infrastructure - Network</label>
+<label><input id="Optiv - Operations - Internal Infrastructure - Network" type=checkbox value="network" name="dl[]" onclick='handleClick(this);'>Optiv - Operations - Internal Infrastructure - Network</label>
 </td>
 <td class="checkbox">
-<label><input id="Optiv - Operations - Internal Infrastructure - Web" type=checkbox name="web"onclick='handleClick(this);'>Optiv - Operations - Internal Infrastructure - Web</label>
+<label><input id="Optiv - Operations - Internal Infrastructure - Web" type=checkbox value="web" name="dl[]" onclick='handleClick(this);'>Optiv - Operations - Internal Infrastructure - Web</label>
 </td>
 <td class="checkbox">
-<label><input id="Optiv - Operations - Internal Infrastructure - Service Desk" type=checkbox name="servicedesk"onclick='handleClick(this);'>Optiv - Operations - Internal Infrastructure - Service Desk</label>
+<label><input id="Optiv - Operations - Internal Infrastructure - Service Desk" type=checkbox value="servicedesk" name="dl[]" onclick='handleClick(this);'>Optiv - Operations - Internal Infrastructure - Service Desk</label>
 </td>
 </tr>
 <tr>
 <td colspan=3>
 
 Enter any e-mail addresses you'd like to add. Use comma to separate e-mail addresses.<p>
-<textarea id="other" rows="4" cols="100" ></textarea><p>
+<textarea id="other" rows="4" cols="100" name="singleEmail[]"></textarea><p>
 <button class="submit" type="button" onclick="handleSubmit()">Add</button>
 
 </td>
@@ -164,7 +163,7 @@ When you're satisfied with the details and the resolution team, hit the Send but
 </td>
 </tr>
 </table>
-
+<input type="hidden" name="eventID" value=<?php echo $id; ?>>
 </form>
   <script src="http://static.jsbin.com/js/render/edit.js?4.0.4"></script>
 
@@ -185,11 +184,11 @@ ga('send', 'pageview');
 	{
 		if (cb.checked == true) 
 		{
-		  show(cb.id, cb.name);
+		  show(cb.id, cb.value);
 		}
 		if (cb.checked == false) 
 		{
-		  show("", cb.name);
+		  show("", cb.value);
 		}
 
 	}
