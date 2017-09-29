@@ -56,7 +56,7 @@ Create New Outage Event
 <tr>
 <td>
 <h4>
-Welcome to the Cyrin outage notification system. To get started, first enter the name of the system that is experiencing the outage. <p>
+Welcome to the Cyrin outage notification system. To get started, first enter the name of the system that is experiencing the outage.<p>
 </h>
 </td>
 </tr>
